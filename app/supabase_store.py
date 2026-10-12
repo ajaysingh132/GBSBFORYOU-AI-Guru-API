@@ -34,14 +34,20 @@ def save_interaction(decision) -> bool:
         "concept": decision.concept[:120],
     }
     try:
+        headers = {
+            "apikey": secret_key,
+            "Content-Type": "application/json",
+            "Prefer": "return=minimal",
+        }
+        # Modern sb_secret_* keys are API keys, not JWTs; sending them as
+        # Bearer tokens causes Supabase authentication failures. Keep the
+        # Authorization header only for legacy JWT-based service_role keys.
+        if secret_key.startswith("eyJ"):
+            headers["Authorization"] = f"Bearer {secret_key}"
+
         response = httpx.post(
             f"{base_url}/rest/v1/ai_guru_interactions",
-            headers={
-                "apikey": secret_key,
-                "Authorization": f"Bearer {secret_key}",
-                "Content-Type": "application/json",
-                "Prefer": "return=minimal",
-            },
+            headers=headers,
             json=payload,
             timeout=5.0,
         )
