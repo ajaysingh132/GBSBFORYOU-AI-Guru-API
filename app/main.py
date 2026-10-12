@@ -40,25 +40,47 @@ def supabase_health():
             "status": "not_configured",
             "supabase_reachable": False,
             "database_writes_enabled": secret_configured,
+            "database_write_status": "not_verified",
         }
 
     try:
+        # Probe a real REST table endpoint instead of the PostgREST root.
+        # limit=0 checks API access without reading student interaction data.
         response = httpx.get(
-            f"{base_url}/rest/v1/",
+            f"{base_url}/rest/v1/ai_guru_interactions?select=id&limit=0",
             headers={"apikey": publishable_key},
             timeout=5.0,
         )
-        reachable = response.status_code < 500
+
+        if response.status_code in (401, 403):
+            status = "authentication_error"
+            reachable = True
+        elif 200 <= response.status_code < 400:
+            status = "connected"
+            reachable = True
+        elif response.status_code >= 500:
+            status = "unavailable"
+            reachable = False
+        else:
+            status = "configuration_error"
+            reachable = True
+
         return {
-            "status": "connected" if reachable else "unavailable",
+            "status": status,
             "supabase_reachable": reachable,
             "database_writes_enabled": secret_configured,
+            "database_write_status": (
+                "configured_not_verified" if secret_configured else "not_configured"
+            ),
         }
     except httpx.HTTPError:
         return {
             "status": "unavailable",
             "supabase_reachable": False,
             "database_writes_enabled": secret_configured,
+            "database_write_status": (
+                "configured_not_verified" if secret_configured else "not_configured"
+            ),
         }
 
 
