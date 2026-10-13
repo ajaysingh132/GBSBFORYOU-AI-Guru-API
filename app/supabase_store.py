@@ -6,6 +6,12 @@ import httpx
 logger = logging.getLogger(__name__)
 
 
+def supabase_key_format_valid(secret_key: str) -> bool:
+    """Accept Supabase modern secret keys or legacy service_role JWTs only."""
+    key = secret_key.strip()
+    return key.startswith("sb_secret_") or key.startswith("eyJ")
+
+
 def supabase_configured() -> bool:
     return bool(
         os.getenv("SUPABASE_URL", "").strip()
@@ -24,6 +30,12 @@ def save_interaction(decision) -> bool:
         or os.getenv("SUPABASE_SERVICE_ROLE_KEY", "").strip()
     )
     if not base_url or not secret_key:
+        return False
+    if not supabase_key_format_valid(secret_key):
+        logger.error(
+            "Supabase write disabled: SUPABASE_SECRET_KEY has an unsupported format; "
+            "expected sb_secret_* or a legacy service_role JWT (eyJ...)."
+        )
         return False
 
     payload = {
