@@ -4,7 +4,7 @@ import httpx
 from fastapi import FastAPI
 from .models import GuruRequest, GuruResponse
 from .core import build_decision
-from .supabase_store import save_interaction, supabase_configured
+from .supabase_store import save_interaction, supabase_configured, supabase_key_format_valid
 
 
 app = FastAPI(
@@ -34,13 +34,21 @@ def supabase_health():
         os.getenv("SUPABASE_SECRET_KEY", "").strip()
         or os.getenv("SUPABASE_SERVICE_ROLE_KEY", "").strip()
     )
+    secret_key = (
+        os.getenv("SUPABASE_SECRET_KEY", "").strip()
+        or os.getenv("SUPABASE_SERVICE_ROLE_KEY", "").strip()
+    )
+    secret_key_valid = bool(secret_key and supabase_key_format_valid(secret_key))
 
     if not base_url or not publishable_key:
         return {
             "status": "not_configured",
             "supabase_reachable": False,
             "database_writes_enabled": secret_configured,
-            "database_write_status": "not_verified",
+            "database_write_status": (
+                "invalid_secret_key_format" if secret_key and not secret_key_valid
+                else "not_verified"
+            ),
         }
 
     try:
@@ -70,7 +78,8 @@ def supabase_health():
             "supabase_reachable": reachable,
             "database_writes_enabled": secret_configured,
             "database_write_status": (
-                "configured_not_verified" if secret_configured else "not_configured"
+                "invalid_secret_key_format" if secret_key and not secret_key_valid
+                else "configured_not_verified" if secret_configured else "not_configured"
             ),
         }
     except httpx.HTTPError:
