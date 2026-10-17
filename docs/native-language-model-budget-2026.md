@@ -22,7 +22,7 @@
 | External expert review/workshops | ₹1,50,000 |
 | Research/partner travel | ₹1,00,000 |
 | Hosting, domain, monitoring, security and backup software allowance | ₹50,000 |
-| **Subtotal before contingency** | **₹64,34,000** |
+| **Subtotal before contingency** | **₹64,29,000** |
 | Contingency (10%) | ₹6,42,900 |
 | **Total first-year planning budget** | **₹70,71,900** |
 
