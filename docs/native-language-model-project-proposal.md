@@ -65,7 +65,7 @@ Four human supervisors coordinate twelve AI-assisted roles. AI roles are workflo
 
 ## Proposed first-year budget
 
-The detailed line-item budget is in [First-year budget](native-language-model-budget-2026.md). The current planning estimate is **₹70.8 lakh for 12 months including 10% contingency**, assuming four full-time human supervisors, shared AI tooling, four workstations, central storage and backup, and a ₹5 lakh compute reserve. This is a planning estimate based on stated salary assumptions and observed retail listings—not a vendor quotation, approved grant, or committed expenditure.
+The detailed line-item budget is in [First-year budget](native-language-model-budget-2026.md). The current planning estimate is **₹70.72 lakh (about ₹70.7 lakh) for 12 months including 10% contingency**, assuming four full-time human supervisors, shared AI tooling, four workstations, central storage and backup, and a ₹5 lakh compute reserve. This is a planning estimate based on stated salary assumptions and observed retail listings—not a vendor quotation, approved grant, or committed expenditure.
 
 A lean pilot can be smaller if human appointments are phased and compute is obtained in-kind. The project will seek modular support rather than assuming one scheme will fund the entire first-year plan.
 
