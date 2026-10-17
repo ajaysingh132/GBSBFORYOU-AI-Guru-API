@@ -23,10 +23,10 @@
 | Research/partner travel | ₹1,00,000 |
 | Hosting, domain, monitoring, security and backup software allowance | ₹50,000 |
 | **Subtotal before contingency** | **₹64,34,000** |
-| Contingency (10%) | ₹6,43,400 |
-| **Total first-year planning budget** | **₹70,77,400** |
+| Contingency (10%) | ₹6,42,900 |
+| **Total first-year planning budget** | **₹70,71,900** |
 
-**Rounded planning request: ₹70.8 lakh for 12 months.**
+**Rounded planning request: ₹70.72 lakh (about ₹70.7 lakh) for 12 months.**
 
 This total excludes office rent, founder/director salary, taxes not captured in supplier prices, major legal proceedings, and compute demand above the ₹5 lakh reserve. If operated remotely or through a host institution, rent can be avoided or separately provided in-kind.
 
